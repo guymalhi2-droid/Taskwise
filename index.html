@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#5265d8">
+  <meta name="description" content="Plan your days and keep track of every unfinished task.">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="styles.css">
+  <title>Daywise — To-do list</title>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-icon" aria-hidden="true">✓</div>
+        <div><h1>Daywise</h1><p>Your plans, all in one place.</p></div>
+      </div>
+      <button id="installBtn" class="button button-soft install-button" hidden>Install app</button>
+    </header>
+
+    <nav class="tabs" aria-label="Main navigation">
+      <button class="tab active" data-page="calendar"><span>▦</span> Calendar</button>
+      <button class="tab" data-page="unfinished"><span>☷</span> Unfinished <b id="navCount">0</b></button>
+    </nav>
+
+    <main>
+      <section id="calendarPage" class="page">
+        <div class="section-heading">
+          <div><h2>My calendar</h2><p>Choose a day to view its tasks.</p></div>
+          <button id="addTaskBtn" class="button"><span>＋</span> Add task</button>
+        </div>
+        <section class="calendar-card card">
+          <div class="month-row">
+            <button id="prevMonth" class="icon-button" aria-label="Previous month">‹</button>
+            <h3 id="monthTitle"></h3>
+            <button id="nextMonth" class="icon-button" aria-label="Next month">›</button>
+          </div>
+          <div class="weekdays" aria-hidden="true">
+            <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+          </div>
+          <div id="calendarGrid" class="calendar-grid"></div>
+          <div class="legend"><span><i class="dot dot-open"></i> Has unfinished tasks</span><span><i class="dot dot-done"></i> Completed</span></div>
+        </section>
+
+        <div class="day-heading">
+          <div><h2 id="selectedDateTitle">Today</h2><p id="daySummary">0 unfinished · 0 completed</p></div>
+          <button id="addForDayBtn" class="button button-outline">＋ Add for this day</button>
+        </div>
+        <div id="dayTasks" class="task-list"></div>
+      </section>
+
+      <section id="unfinishedPage" class="page" hidden>
+        <div class="section-heading stacked">
+          <div><h2>Unfinished tasks</h2><p>Everything you still need to do, across all dates.</p></div>
+          <button id="addTaskBtn2" class="button"><span>＋</span> Add task</button>
+        </div>
+        <div class="stats-grid">
+          <div class="card stat-card"><span>Remaining</span><strong id="remainingStat">0</strong></div>
+          <div class="card stat-card"><span>Completed</span><strong id="completedStat">0</strong></div>
+        </div>
+        <label class="search-box"><span>⌕</span><input id="searchInput" type="search" placeholder="Search tasks…" autocomplete="off"></label>
+        <div id="filters" class="filters">
+          <button class="filter active" data-filter="all">All</button>
+          <button class="filter" data-filter="overdue">Overdue</button>
+          <button class="filter" data-filter="today">Today</button>
+          <button class="filter" data-filter="upcoming">Upcoming</button>
+        </div>
+        <div id="unfinishedTasks" class="task-list"></div>
+      </section>
+    </main>
+    <footer><span>DAYWISE</span> · Plan your day, one task at a time.</footer>
+  </div>
+
+  <dialog id="taskDialog" class="task-dialog">
+    <form id="taskForm" method="dialog">
+      <div class="dialog-heading"><div><h2 id="dialogTitle">New task</h2><p>Add a task and choose its due date.</p></div><button type="button" id="closeDialog" class="icon-button" aria-label="Close">×</button></div>
+      <label class="field-label" for="taskName">Task name</label>
+      <input id="taskName" class="text-input" maxlength="180" required placeholder="e.g. Finish physics homework" autocomplete="off">
+      <label class="field-label" for="taskDate">Due date</label>
+      <input id="taskDate" class="text-input" type="date" required>
+      <p id="formError" class="form-error" role="alert"></p>
+      <div class="dialog-actions"><button type="button" id="cancelDialog" class="button button-outline">Cancel</button><button type="submit" class="button">Save task</button></div>
+    </form>
+  </dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
